@@ -1,6 +1,9 @@
 node_modules
-.env
-config.json
-ccc.db
 json
+.env
+ccc.db
+config.json
+create-db.js
+deploy-commands.js
 eslint.config.js
+query.js
