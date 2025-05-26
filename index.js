@@ -30,7 +30,8 @@ for (const folder of commandFolders) {
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
-		} else {
+		}
+		else {
 			console.log('[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.');
 		}
 	}
@@ -48,7 +49,8 @@ client.on(Events.InteractionCreate, async interaction => {
 
 	try {
 		await command.execute(interaction);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {
 			await interaction.followUp({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
@@ -78,7 +80,7 @@ function getCCCPart(paragraph) {
 	}
 }
 
-// Code for handling passive conversation
+// Code for handling passive message listening
 // --------------------------------------------------------------------------------
 const { EmbedBuilder } = require('discord.js');
 
@@ -87,10 +89,13 @@ client.on(Events.MessageCreate, async message => {
 	// if the message is from the bot, ignore
 	if (message.author.bot) return;
 
-	// Match all CCC <number> patterns
+	// Match all CCC <number> patterns, pulling citations from the message
+	// (e.g. CCC 123, CCC 45, and CCC 123 would turn out as such [["CCC 123", "123"], ["CCC 45", "45"], ["CCC 123", "123"])
 	const matches = [...message.content.matchAll(/\bCCC\s+(\d{1,4})\b/gi)];
 	if (matches.length === 0) return;
 
+	// this then takes and converts the second entry (m[1]) to base ten in a set, which removes all duplicates
+	// leaves us with [123, 45] and then the "..." turns it back into the array.
 	const paragraphNumbers = [...new Set(matches.map(m => parseInt(m[1], 10)))];
 
 	for (const number of paragraphNumbers) {
@@ -103,7 +108,8 @@ client.on(Events.MessageCreate, async message => {
 			.setDescription(row ? row.text : '❌ Paragraph not found.')
 			.setFooter({
 				text: 'BishopBot v1.1.0 by armac7',
-				iconURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Emblem_of_the_Papacy_SE.svg/120px-Emblem_of_the_Papacy_SE.svg.png' // Vatican coat of arms
+				// eslint-disable-next-line comma-dangle
+				iconURL: 'https://raw.githubusercontent.com/armac7/catechesis-discord-bot/refs/heads/main/assets/imgs/bishop-bot.png'
 			});
 
 		await message.reply({ embeds: [embed] });
