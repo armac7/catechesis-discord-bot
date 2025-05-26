@@ -50,7 +50,7 @@ module.exports = {
 						{ name: 'Additional Info', value: result.info || 'N/A' }
 					)
 					.setFooter({
-						text: 'Catechism of the Catholic Church',
+						text: 'BishopBot v1.1.0 by armac7',
 						iconURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Emblem_of_the_Papacy_SE.svg/120px-Emblem_of_the_Papacy_SE.svg.png' // Vatican coat of arms
 					});
 
@@ -72,7 +72,11 @@ module.exports = {
 			const embed = new EmbedBuilder()
 				.setColor(0xFFE100)
 				.setTitle('📜 List of Heresies')
-				.setDescription(results.map(h => `${h.slug}`).join('\n'));
+				.setDescription(results.map(h => `${h.slug}`).join('\n'))
+				.setFooter({
+					text: 'BishopBot v1.1.0 by armac7',
+					iconURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Emblem_of_the_Papacy_SE.svg/120px-Emblem_of_the_Papacy_SE.svg.png' // Vatican coat of arms
+				});
 
 				await interaction.reply({ embeds: [embed] });
 
