@@ -1,7 +1,5 @@
 ![BishopBot Logo](./assets/imgs/bishop-bot-banner.png)
 
-### [DISCLAIMER] Due to not having funding and no way to reliably host the bot for free, the bot is otherwise down for the moment. 
-
 ## Meet Bishop Bot
 BishopBot is here for all your Catholic knowledge needs. Starting out as a bot for the Catechism of the Catholic Church (originally called Catechism Bot), BishopBot
 has since had more and more features tacked on, and more are on the way. Right now, he can cite the entire Catechism of the Catholic Church for you, give you information
