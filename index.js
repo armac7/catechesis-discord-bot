@@ -102,7 +102,7 @@ client.on(Events.MessageCreate, async message => {
 			.setTitle(`📜 CCC ${number} - ${partName}`)
 			.setDescription(row ? row.text : '❌ Paragraph not found.')
 			.setFooter({
-				text: 'BishopBot v1.0.0 by armac7',
+				text: 'BishopBot v1.1.0 by armac7',
 				iconURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Emblem_of_the_Papacy_SE.svg/120px-Emblem_of_the_Papacy_SE.svg.png' // Vatican coat of arms
 			});
 
