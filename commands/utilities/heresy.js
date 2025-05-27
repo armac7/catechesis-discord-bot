@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const Database = require('better-sqlite3');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, MessageFlags } = require('discord.js');
 
 const db = new Database('ccc.db');
 
@@ -77,7 +77,7 @@ module.exports = {
 						{ name: 'CCC References', value: referenceArray.length ? referenceArray.join(', ') : 'N/A' },
 					)
 					.setFooter({
-						text: 'BishopBot v1.1.0 by armac7',
+						text: `${process.env.version}`,
 						// eslint-disable-next-line comma-dangle
 						iconURL: 'https://raw.githubusercontent.com/armac7/catechesis-discord-bot/refs/heads/main/assets/imgs/bishop-bot.png'
 					});
@@ -85,7 +85,7 @@ module.exports = {
 				await interaction.reply({ embeds: [embed] });
 			}
 			else {
-				await interaction.reply(`❌ No heresy found matching **"${input}"**.`);
+				await interaction.reply({content: `❌ No heresy found matching **"${input}"**.`, flags: MessageFlags.Ephemeral });
 			}
 		}
 		else {
@@ -93,7 +93,7 @@ module.exports = {
 			const results = stmt.all();
 
 			if (!results.length) {
-				await interaction.reply('❌ No heresy found in database.');
+				await interaction.reply({ content: '❌ No heresy found in database.', flags: MessageFlags.Ephemeral });
 				return;
 			}
 
@@ -108,7 +108,7 @@ module.exports = {
 					iconURL: 'https://raw.githubusercontent.com/armac7/catechesis-discord-bot/refs/heads/main/assets/imgs/bishop-bot.png'
 				});
 
-			await interaction.reply({ embeds: [embed] });
+			await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
 
 		}
 	},
