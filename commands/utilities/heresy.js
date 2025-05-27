@@ -103,7 +103,7 @@ module.exports = {
 				.setTitle('📜 List of Heresies')
 				.setDescription(results.map(h => `${h.name}`).join('\n'))
 				.setFooter({
-					text: 'BishopBot v1.1.0 by armac7',
+					text: `${process.env.version}`,
 					// eslint-disable-next-line comma-dangle
 					iconURL: 'https://raw.githubusercontent.com/armac7/catechesis-discord-bot/refs/heads/main/assets/imgs/bishop-bot.png'
 				});

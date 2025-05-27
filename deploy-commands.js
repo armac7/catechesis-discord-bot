@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 // const { clientId, guildId, token } = require('./config.json');
 dotenv.config();
 const clientId = process.env.clientId;
-const guildId = process.env.guildId;
+// const guildId = process.env.guildId;
 const token = process.env.token;
 const fs = require('node:fs');
 const path = require('node:path');
