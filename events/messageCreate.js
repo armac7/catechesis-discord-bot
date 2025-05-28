@@ -70,7 +70,7 @@ module.exports = {
 				.setTitle(`📜 CCC ${number} - ${partName}`)
 				.setDescription(row ? row.text : '❌ Paragraph not found.')
 				.setFooter({
-					text: `${config.version} by armac7`,
+					text: `v${config.version} by armac7`,
 					// eslint-disable-next-line comma-dangle
 					iconURL: 'https://raw.githubusercontent.com/armac7/catechesis-discord-bot/refs/heads/main/assets/imgs/bishop-bot.png'
 				});
