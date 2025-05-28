@@ -1,3 +1,4 @@
+const config = require('../globalConfig.js');
 const { Events, MessageFlags, Message } = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
 const Database = require('better-sqlite3');
@@ -34,10 +35,24 @@ module.exports = {
 		console.log(matches);
 		if (matches.length === 0) return;
 
+		// const paragraphNumbers = [];
+
+		// for (const match in matches) {
+		// 	console.log(match);
+		// 	const start = parseInt(match[1]);
+		// 	const end = match[2] ? parseInt(match[2]) : start;
+
+		// 	for (let i = start; i <= end; i++) {
+		// 		paragraphNumbers.push(i);
+		// 	}
+		// };
+        
+		// console.log(paragraphNumbers);
 
 		// this then takes and converts the second entry (m[1]) to base ten in a set, which removes all duplicates
-		// leaves us with [123, 45] and then the "..." turns it back into the array.
+		// leaves us with [123, 45] and then the "..." turns it back into the array
 		const paragraphNumbers = [...new Set(matches.map(m => parseInt(m[1], 10)))];
+		// paragraphNumbers.push([...new Set(matches.map(m => parseInt(m[1], 10)))]);
 		console.log(paragraphNumbers);
 
 		let i = 0;
@@ -55,7 +70,7 @@ module.exports = {
 				.setTitle(`📜 CCC ${number} - ${partName}`)
 				.setDescription(row ? row.text : '❌ Paragraph not found.')
 				.setFooter({
-					text: `${process.env.version}`,
+					text: `${config.version} by armac7`,
 					// eslint-disable-next-line comma-dangle
 					iconURL: 'https://raw.githubusercontent.com/armac7/catechesis-discord-bot/refs/heads/main/assets/imgs/bishop-bot.png'
 				});

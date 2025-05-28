@@ -1,8 +1,10 @@
+const config = require('../../globalConfig.js');
 const { SlashCommandBuilder, Message } = require('discord.js');
-const Database = require('better-sqlite3');
 const { EmbedBuilder, MessageFlags } = require('discord.js');
-
+require('dotenv').config();
+const Database = require('better-sqlite3');
 const db = new Database('ccc.db');
+
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -55,7 +57,7 @@ module.exports = {
 						{ name: 'Additional Info', value: results.info || 'N/A' },
 					)
 					.setFooter({
-						text: `${process.env.version}`,
+						text: `v${config.version} by armac7`,
 						// eslint-disable-next-line comma-dangle
 						iconURL: 'https://raw.githubusercontent.com/armac7/catechesis-discord-bot/refs/heads/main/assets/imgs/bishop-bot.png'
 					});
@@ -81,7 +83,7 @@ module.exports = {
 				.setTitle('📜 List of Councils')
 				.setDescription(results.map(h => `${h.name}`).join('\n'))
 				.setFooter({
-					text: `${process.env.version}`,
+					text: `v${config.version} by armac7`,
 					// eslint-disable-next-line comma-dangle
 					iconURL: 'https://raw.githubusercontent.com/armac7/catechesis-discord-bot/refs/heads/main/assets/imgs/bishop-bot.png'
 				});
