@@ -3,12 +3,14 @@ const fs = require('fs');
 
 // Load JSON data as an array of { id, text }
 const cccData = JSON.parse(fs.readFileSync('./json/catechism.json', 'utf8'));
+const canonData = JSON.parse(fs.readFileSync('./json/canon.json', 'utf8'));
 const heresyData = JSON.parse(fs.readFileSync('./json/heresy.json', 'utf8'));
 const councilData = JSON.parse(fs.readFileSync('./json/councils.json', 'utf8'));
 
 // Create SQLite database
 const db = new Database('ccc.db');
 
+// ========================================== CATECHISM ==========================================
 // Create table
 db.exec(`
   CREATE TABLE IF NOT EXISTS catechism (
@@ -26,9 +28,42 @@ for (const entry of cccData) {
 	insert.run(entry.id, entry.text);
 }
 
+
+
+// ========================================== CANON ==========================================
+db.exec(`
+  CREATE TABLE IF NOT EXISTS canon (
+    id INTEGER PRIMARY KEY,
+    parent_id INTEGER,
+    text TEXT
+  );  
+`);
+
+const insertCanon = db.prepare(`INSERT INTO canon (id, parent_id, text) VALUES (?, ?, ?)`);
+
+const insertCanonFunc = db.transaction((data) => {
+  insert.run(1, null, "Hello, world");
+  console.log("Insert succeeded");
+  for (const entry of data) {
+    if (entry.text) {
+      console.log("Inserting:", entry.id, null, entry.text);
+      insert.run(entry.id, null, entry.text);
+    } else if (entry.sections) {
+      for (const section of entry.sections) {
+        insert.run(section.id, entry.id, section.text);
+      }
+    }
+    console.log("Moving on");
+  }
+});
+
+insertCanonFunc(canonData);
+
+
+// ========================================== HERESIES ==========================================
+
 // eslint-disable-next-line no-unused-vars
 const slugify = (text) => text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS heresies (
@@ -64,6 +99,9 @@ for (const [slug, heresy] of Object.entries(heresyData)) {
 	);
 }
 
+
+
+// ========================================== COUNCILS ==========================================
 db.exec(`
   CREATE TABLE IF NOT EXISTS councils (
     slug TEXT PRIMARY KEY,

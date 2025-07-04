@@ -7,7 +7,7 @@ const config = require('./globalConfig.js');
 
 dotenv.config();
 
-const token = process.env.token;
+const token = process.env.TOKEN;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
