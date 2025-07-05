@@ -1,6 +1,6 @@
 {
   "name": "catechism-discord-bot",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "A bot that cites the Catechism of the Catholic Church when prompted.",
   "main": "index.js",
   "scripts": {

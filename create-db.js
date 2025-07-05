@@ -31,33 +31,43 @@ for (const entry of cccData) {
 
 
 // ========================================== CANON ==========================================
+db.exec(`DROP TABLE IF EXISTS canon;`);
+db.exec(`DROP TABLE IF EXISTS canonSection;`);
+
 db.exec(`
   CREATE TABLE IF NOT EXISTS canon (
     id INTEGER PRIMARY KEY,
-    parent_id INTEGER,
     text TEXT
   );  
 `);
 
-const insertCanon = db.prepare(`INSERT INTO canon (id, parent_id, text) VALUES (?, ?, ?)`);
+db.exec(`
+    CREATE TABLE IF NOT EXISTS canonSection (
+    id INTEGER,
+    canon_id INTEGER,
+    text TEXT,
+    PRIMARY KEY (id, canon_id),
+    FOREIGN KEY (canon_id) REFERENCES canon(id) ON DELETE CASCADE
+  );
+`);
 
-const insertCanonFunc = db.transaction((data) => {
-  insert.run(1, null, "Hello, world");
-  console.log("Insert succeeded");
-  for (const entry of data) {
-    if (entry.text) {
-      console.log("Inserting:", entry.id, null, entry.text);
-      insert.run(entry.id, null, entry.text);
-    } else if (entry.sections) {
-      for (const section of entry.sections) {
-        insert.run(section.id, entry.id, section.text);
+const insertCanon = db.prepare(`INSERT INTO canon (id, text) VALUES (?, ?)`);
+const insertCanonSection = db.prepare(`INSERT INTO canonSection (id, canon_id, text) VALUES (?, ?, ?)`);
+
+for (const entry of canonData) {
+  console.log(entry);
+  if ('text' in entry && typeof entry.text === 'string') {
+    insertCanon.run(entry.id, entry.text);
+  } else if ('sections' in entry && Array.isArray(entry.sections)) {
+    insertCanon.run(entry.id, null);
+
+    for (const section of entry.sections) {
+      if ('text' in section && typeof section.text === 'string') {
+        insertCanonSection.run(section.id, entry.id, section.text);
       }
     }
-    console.log("Moving on");
   }
-});
-
-insertCanonFunc(canonData);
+}
 
 
 // ========================================== HERESIES ==========================================
