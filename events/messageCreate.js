@@ -41,7 +41,7 @@ module.exports = {
 				if (end >= start) {
 					ranges.push([start, end]);
 				} else {
-					// Invalid range, ignore or handle error if you want
+					// Invalid range, ignore
 				}
 			}
 		}

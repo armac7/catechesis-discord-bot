@@ -14,7 +14,7 @@ module.exports = {
 			option
 				.setName('name')
 				.setDescription('Name of the heresy to look up')
-				// eslint-disable-next-line comma-dangle
+				.setAutocomplete(true)
 				.setRequired(false)
 		),
 	async execute(interaction) {
